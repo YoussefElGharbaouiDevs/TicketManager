@@ -17,11 +17,10 @@ Ce projet est une application web de gestion de tickets d’assistance technique
 
 ## 🛠️ Technologies
 
-- Python 3.x
-- Django 4.x
+- Python 3.9.13
+- Django 4.2.20
 - SQLite / PostgreSQL
 - TailwindCSS + DaisyUI
-- JavaScript (optionnel pour interactions frontend)
 
 ---
 
@@ -58,43 +57,3 @@ python manage.py createsuperuser
 ```bash
 python manage.py runserver
 ```
-
----
-
-## 📁 Structure du projet
-
-```
-tickets/
-├── models.py
-├── views.py
-├── templates/
-│   ├── tickets/
-│   │   ├── ticket_list.html
-│   │   ├── ticket_detail.html
-│   │   └── ...
-├── static/
-├── forms.py
-├── signals.py
-└── ...
-```
-
----
-
-## 📌 À venir
-
-- Système de filtrage et recherche des tickets
-- Notifications en temps réel (via WebSockets)
-- Statistiques des tickets par agent
-- Système de satisfaction client
-
----
-
-## 📄 Licence
-
-Ce projet est open-source sous licence MIT.
-
----
-
-## 👨‍💻 Auteur
-
-- [Ton Nom](https://github.com/ton-nom)
