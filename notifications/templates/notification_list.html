@@ -1,0 +1,38 @@
+﻿{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto mt-8 px-4">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold">Mes notifications</h2>
+        <a href="{% url 'mark_all_notifications_read' %}" class="btn btn-sm btn-outline">Tout marquer comme lu</a>
+    </div>
+    
+    {% if notifications %}
+        <div class="space-y-4">
+            {% for notification in notifications %}
+                <div class="bg-base-200 rounded-lg shadow p-4 {% if not notification.is_read %}border-l-4 border-blue-500{% endif %}">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500">{{ notification.created_at|date:"d/m/Y H:i" }}</p>
+                            <h3 class="font-medium {% if not notification.is_read %}font-bold{% endif %}">
+                                {{ notification.get_notification_type_display }}
+                            </h3>
+                            <p>{{ notification.message }}</p>
+                            <a href="{% url 'ticket_detail_edit' notification.ticket.id %}" class="text-blue-600 hover:underline mt-2 inline-block">
+                                Voir le ticket
+                            </a>
+                        </div>
+                        {% if not notification.is_read %}
+                            <a href="{% url 'mark_notification_read' notification.id %}" class="btn btn-xs">Marquer comme lu</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="bg-base-200 rounded-lg shadow p-6 text-center">
+            <p>Vous n'avez aucune notification.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

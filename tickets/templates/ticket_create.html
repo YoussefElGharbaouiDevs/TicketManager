@@ -1,0 +1,42 @@
+﻿{% extends 'base.html' %}
+{% load form_tags %}
+{% block content %}
+<div class="max-w-xl mx-auto py-8">
+    <h2 class="text-2xl font-bold mb-6 text-center">Créer un nouveau ticket</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="grid grid-cols-[120px_1fr] items-center mb-4">
+            <label class="label">Titre</label>
+            {{ form.title|add_class:"input input-bordered w-full" }}
+        </div>
+
+        <div class="grid grid-cols-[120px_1fr] items-start mb-4">
+            <label class="label pt-2">Description</label>
+            {{ form.description|add_class:"textarea textarea-bordered w-full" }}
+        </div>
+
+        <div class="grid grid-cols-[120px_1fr] items-center mb-4">
+            <label class="label">Catégorie</label>
+            {{ form.category|add_class:"select select-bordered w-full" }}
+        </div>
+
+        <div class="grid grid-cols-[120px_1fr] items-center mb-4">
+            <label class="label">Priorité</label>
+            {{ form.priority|add_class:"select select-bordered w-full" }}
+        </div>
+
+
+
+        <div class="grid grid-cols-[120px_1fr] items-center mb-4">
+            <label class="label">Pièce jointe</label>
+            {{ form.attached_files|add_class:"file-input file-input-bordered w-full" }}
+        </div>
+
+        <div class="flex justify-center mt-6">
+            <button type="submit" class="btn btn-primary px-8">Créer</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

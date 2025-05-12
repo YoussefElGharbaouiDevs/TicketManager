@@ -1,0 +1,70 @@
+﻿{% extends 'base.html' %}
+{% load form_tags %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto mt-10">
+    <div class="card bg-base-100 shadow-xl p-6">
+        <h2 class="text-2xl font-semibold mb-4 text-center">Mon Profil</h2>
+        <form method="post" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+
+            <!-- Nom complet -->
+            <div class="form-control w-full">
+                <label for="{{ form.username.id_for_label }}" class="label">
+                    <span class="label-text">Nom d'utilisateur</span>
+                </label>
+                {{ form.username|add_class:"input input-bordered w-full" }}
+                {% if form.username.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.username.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Email -->
+            <div class="form-control w-full">
+                <label for="{{ form.email.id_for_label }}" class="label">
+                    <span class="label-text">Email</span>
+                </label>
+                {{ form.email|add_class:"input input-bordered w-full" }}
+                {% if form.email.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.email.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Téléphone -->
+            <div class="form-control w-full">
+                <label for="{{ form.phone.id_for_label }}" class="label">
+                    <span class="label-text">Téléphone</span>
+                </label>
+                {{ form.phone|add_class:"input input-bordered w-full" }}
+                {% if form.phone.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.phone.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Photo de profil -->
+            <div class="form-control w-full">
+                <label class="label">
+                    <span class="label-text">Photo de profil actuelle</span>
+                </label>
+                {% if user.profile_picture %}
+                    <img src="{{ user.profile_picture.url }}" alt="Photo de profil" class="w-20 h-20 rounded-full object-cover mb-2">
+                {% else %}
+                    <p class="text-sm text-gray-400">Aucune photo</p>
+                {% endif %}
+
+                {{ form.profile_picture|add_class:"file-input file-input-bordered w-full" }}
+                {% if form.profile_picture.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.profile_picture.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Submit -->
+            <div class="form-control mt-6">
+                <button type="submit" class="btn btn-success w-full">Mettre à jour</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

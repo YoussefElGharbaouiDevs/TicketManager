@@ -1,0 +1,39 @@
+﻿{% extends 'base.html' %}
+{% block title %}Connexion{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-base-200">
+    <div class="card w-full max-w-md shadow-xl bg-base-100">
+        <div class="card-body">
+            <h2 class="text-2xl font-semibold text-center mb-6">Connexion</h2>
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+
+                <div class="form-control">
+                    <label class="label" for="username">
+                        <span class="label-text">Nom d'utilisateur</span>
+                    </label>
+                    <input type="text" name="username" id="username" required class="input input-bordered w-full" />
+                </div>
+
+                <div class="form-control">
+                    <label class="label" for="password">
+                        <span class="label-text">Mot de passe</span>
+                    </label>
+                    <input type="password" name="password" id="password" required class="input input-bordered w-full" />
+                </div>
+
+                {% if form.errors %}
+                    <div class="text-red-500 text-sm">
+                        Nom d'utilisateur ou mot de passe invalide.
+                    </div>
+                {% endif %}
+
+                <div class="form-control mt-4">
+                    <button type="submit" class="btn btn-primary w-full">Se connecter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

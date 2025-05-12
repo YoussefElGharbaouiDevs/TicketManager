@@ -1,0 +1,32 @@
+﻿{% extends 'base.html' %}
+{% load form_tags %}
+{% block content %}
+<div class="max-w-2xl mx-auto p-6 bg-base-100 rounded-lg shadow-md">
+    <h2 class="text-3xl font-bold mb-2">{{ ticket.title }}</h2>
+    <p class="text-gray-500 mb-4">Créé le {{ ticket.created_at|date:"d/m/Y H:i" }}</p>
+
+    <strong>Description:</strong>
+    <p class="mb-4">{{ ticket.description }}</p>
+
+    <div class="grid grid-cols-2 gap-4 mb-4">
+        <div><strong>Catégorie:</strong> {{ ticket.category.name }}</div>
+        <div><strong>Priorité:</strong> {{ ticket.priority.name }}</div>
+        <div>
+            <strong>Statut:</strong>
+            <span class="badge" style="background-color: {{ ticket.status.color }}">{{ ticket.status.name }}</span>
+        </div>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-control mb-4">
+            {{ form.status|add_class:"select select-bordered" }}
+        </div>
+
+        <div class="flex justify-between mt-6">
+            <a href="{% url 'agent_dashboard' %}" class="btn btn-outline">← Retour au tableau de bord</a>
+            <button type="submit" class="btn btn-primary">Mettre à jour le statut</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

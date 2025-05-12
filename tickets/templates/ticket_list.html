@@ -1,0 +1,43 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<div class="container mx-auto px-4 py-6">
+    <h1 class="text-3xl font-bold mb-4">Mes Tickets</h1>
+    <a href="{% url 'ticket_create' %}" class="btn btn-primary mb-4">Créer un ticket</a>
+    <div class="overflow-x-auto">
+        <table class="table w-full">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Catégorie</th>
+                    <th>Priorité</th>
+                    <th>Statut</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in tickets %}
+                <tr>
+                    <td class="font-medium">{{ ticket.title }}</td>
+                    <td>{{ ticket.category.name }}</td>
+                    <td>
+                        <span class="badge badge-outline">{{ ticket.priority.name }}</span>
+                    </td>
+                    <td>
+                        <span class="badge" style="background-color: {{ ticket.status.color }}">
+                            {{ ticket.status.name }}
+                        </span>
+                    </td>
+                    <td>{{ ticket.created_at|date:"d/m/Y" }}</td>
+                    <td>
+                        <a href="{% url 'ticket_detail' ticket.id %}" class="btn btn-sm btn-info">Voir</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6">Aucun ticket disponible.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
