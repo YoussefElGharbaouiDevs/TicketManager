@@ -1,0 +1,226 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Section Hero -->
+<section class="py-20 bg-gradient-to-br from-base-100 to-base-200">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                    Gestion de tickets moderne <span class="text-primary">simplifiée</span>
+                </h1>
+                <p class="text-lg mb-8 text-base-content/80">
+                    Rationalisez votre processus de support avec notre système de gestion de tickets intuitif.
+                    Concentrez-vous sur l'essentiel pendant que nous gérons le flux de travail.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="{% url 'signup' %}" class="btn btn-primary btn-lg">
+                        Commencer - C'est gratuit
+                    </a>
+                    <a href="#features" class="btn btn-outline btn-lg">
+                        En savoir plus
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2">
+                <div class="mockup-window bg-base-300 border border-base-300 transform hover:scale-105 transition duration-500">
+                    <img src="/media/dashboard-preview.png" alt="Aperçu du tableau de bord" class="w-full">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Fonctionnalités -->
+<section id="features" class="py-20 bg-base-200">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold mb-4">Fonctionnalités puissantes</h2>
+            <p class="max-w-2xl mx-auto text-lg text-base-content/80">
+                Tout ce dont vous avez besoin pour gérer les tickets de support efficacement
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Fonctionnalité 1 -->
+            <div class="card bg-base-100 shadow-lg hover:shadow-xl transition">
+                <figure class="px-10 pt-10">
+                    <div class="bg-primary/10 p-4 rounded-full">
+                        <svg class="w-10 h-10 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                        </svg>
+                    </div>
+                </figure>
+                <div class="card-body items-center text-center">
+                    <h3 class="card-title">Création de tickets intuitive</h3>
+                    <p>Créez des tickets en quelques secondes avec notre interface rationalisée et nos modèles intelligents.</p>
+                </div>
+            </div>
+
+            <!-- Fonctionnalité 2 -->
+            <div class="card bg-base-100 shadow-lg hover:shadow-xl transition">
+                <figure class="px-10 pt-10">
+                    <div class="bg-secondary/10 p-4 rounded-full">
+                        <svg class="w-10 h-10 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                </figure>
+                <div class="card-body items-center text-center">
+                    <h3 class="card-title">Mises à jour en temps réel</h3>
+                    <p>Recevez des notifications instantanées et des mises à jour sur les changements de statut des tickets.</p>
+                </div>
+            </div>
+
+            <!-- Fonctionnalité 3 -->
+            <div class="card bg-base-100 shadow-lg hover:shadow-xl transition">
+                <figure class="px-10 pt-10">
+                    <div class="bg-accent/10 p-4 rounded-full">
+                        <svg class="w-10 h-10 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                </figure>
+                <div class="card-body items-center text-center">
+                    <h3 class="card-title">Sécurité avancée</h3>
+                    <p>Sécurité de niveau entreprise pour protéger vos données sensibles de tickets.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Statistiques -->
+<section class="py-16 bg-primary text-primary-content">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+                <div class="stat">
+                    <div class="stat-value text-4xl">10 000+</div>
+                    <div class="stat-desc">Tickets traités</div>
+                </div>
+            </div>
+            <div>
+                <div class="stat">
+                    <div class="stat-value text-4xl">99,9%</div>
+                    <div class="stat-desc">Disponibilité</div>
+                </div>
+            </div>
+            <div>
+                <div class="stat">
+                    <div class="stat-value text-4xl">500+</div>
+                    <div class="stat-desc">Clients satisfaits</div>
+                </div>
+            </div>
+            <div>
+                <div class="stat">
+                    <div class="stat-value text-4xl">24/7</div>
+                    <div class="stat-desc">Support</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Témoignages -->
+<section id="testimonials" class="py-20 bg-base-100">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold mb-4">Ce que disent nos clients</h2>
+            <p class="max-w-2xl mx-auto text-lg text-base-content/80">
+                Ne nous croyez pas sur parole
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Témoignage 1 -->
+            <div class="card bg-base-200 shadow-lg">
+                <div class="card-body">
+                    <div class="flex items-center mb-4">
+                        <div class="avatar">
+                            <div class="w-12 rounded-full">
+                                <img src="https://randomuser.me/api/portraits/women/32.jpg" />
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold">Sarah Johnson</h4>
+                            <p class="text-sm opacity-70">CTO, TechCorp</p>
+                        </div>
+                    </div>
+                    <p class="italic">"TicketManager a transformé notre processus de support. Les temps de réponse se sont améliorés de 40% dès le premier mois !"</p>
+                    <div class="rating rating-sm mt-4">
+                        <input type="radio" name="rating-1" class="mask mask-star" checked />
+                        <input type="radio" name="rating-1" class="mask mask-star" checked />
+                        <input type="radio" name="rating-1" class="mask mask-star" checked />
+                        <input type="radio" name="rating-1" class="mask mask-star" checked />
+                        <input type="radio" name="rating-1" class="mask mask-star" checked />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Témoignage 2 -->
+            <div class="card bg-base-200 shadow-lg">
+                <div class="card-body">
+                    <div class="flex items-center mb-4">
+                        <div class="avatar">
+                            <div class="w-12 rounded-full">
+                                <img src="https://randomuser.me/api/portraits/men/75.jpg" />
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold">Michael Chen</h4>
+                            <p class="text-sm opacity-70">Responsable support, SaaS Inc.</p>
+                        </div>
+                    </div>
+                    <p class="italic">"Le tableau de bord d'analytics vaut à lui seul le prix. Nous avons identifié et résolu plusieurs goulots d'étranglement dans notre flux de travail."</p>
+                    <div class="rating rating-sm mt-4">
+                        <input type="radio" name="rating-2" class="mask mask-star" checked />
+                        <input type="radio" name="rating-2" class="mask mask-star" checked />
+                        <input type="radio" name="rating-2" class="mask mask-star" checked />
+                        <input type="radio" name="rating-2" class="mask mask-star" checked />
+                        <input type="radio" name="rating-2" class="mask mask-star" checked />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Témoignage 3 -->
+            <div class="card bg-base-200 shadow-lg">
+                <div class="card-body">
+                    <div class="flex items-center mb-4">
+                        <div class="avatar">
+                            <div class="w-12 rounded-full">
+                                <img src="https://randomuser.me/api/portraits/women/68.jpg" />
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold">Emily Rodriguez</h4>
+                            <p class="text-sm opacity-70">Product Manager, StartUp Co.</p>
+                        </div>
+                    </div>
+                    <p class="italic">"L'adoption par notre équipe a été transparente. L'interface est si intuitive que nous avons complètement sauté la formation."</p>
+                    <div class="rating rating-sm mt-4">
+                        <input type="radio" name="rating-3" class="mask mask-star" checked />
+                        <input type="radio" name="rating-3" class="mask mask-star" checked />
+                        <input type="radio" name="rating-3" class="mask mask-star" checked />
+                        <input type="radio" name="rating-3" class="mask mask-star" checked />
+                        <input type="radio" name="rating-3" class="mask mask-star" checked />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section CTA -->
+<section class="py-20 bg-gradient-to-br from-primary to-secondary text-primary-content">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">Prêt à transformer votre gestion de tickets ?</h2>
+        <p class="max-w-2xl mx-auto text-lg mb-8">
+            Rejoignez des milliers d'équipes qui ont rationalisé leur processus de support avec TicketManager
+        </p>
+        <a href="{% url 'signup' %}" class="btn btn-accent btn-lg">
+            Commencer votre essai gratuit
+        </a>
+    </div>
+</section>
+{% endblock %}

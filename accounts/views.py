@@ -57,3 +57,5 @@ def profile_view(request):
     else:
         form = CustomUserChangeForm(instance=request.user)
     return render(request, 'profile.html', {'form': form})
+
+

@@ -1,6 +1,6 @@
 {% load static tailwind_tags %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <title>Django Tailwind</title>
     <meta charset="UTF-8">
@@ -8,6 +8,22 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="//unpkg.com/alpinejs" defer></script>
     {% tailwind_css %}
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1 0 auto;
+        }
+        footer {
+            flex-shrink: 0;
+            margin-top: 50px;
+        }
+    </style>
 </head>
 
 <body>
@@ -15,24 +31,23 @@
         toasts: [
             {% for message in messages %}
             {
-                type: '{{ message.tags|default:" info
-" }}', // success, error, warning, info
-message: '{{ message|escapejs }}'
-},
-{% endfor %}
-]
-}"
-x-init="toasts.forEach((_, i) => setTimeout(() => toasts.splice(i, 1), 5000))"
-class="toast toast-top toast-end z-50">
+                type: '{{ message.tags|default:" info" }}',
+                message: '{{ message|escapejs }}'
+            },
+            {% endfor %}
+        ]
+    }"
+     x-init="toasts.forEach((_, i) => setTimeout(() => toasts.splice(i, 1), 5000))"
+     class="toast toast-top toast-end z-50">
 
-<template x-for="(toast, index) in toasts" :key="index">
-    <div :class="`alert alert-${toast.type} shadow-lg`">
-        <div class="flex justify-between items-center w-full">
-            <span x-text="toast.message"></span>
-            <button @click="toasts.splice(index, 1)" class="btn btn-sm btn-circle">✕</button>
+    <template x-for="(toast, index) in toasts" :key="index">
+        <div :class="`alert alert-${toast.type} shadow-lg`">
+            <div class="flex justify-between items-center w-full">
+                <span x-text="toast.message"></span>
+                <button @click="toasts.splice(index, 1)" class="btn btn-sm btn-circle">✕</button>
+            </div>
         </div>
-    </div>
-</template>
+    </template>
 </div>
 
 <nav class="navbar bg-base-100 shadow-md">
@@ -47,13 +62,12 @@ class="toast toast-top toast-end z-50">
 
         {% if user.is_authenticated and user.role == 'agent' %}
         <a href="{% url 'agent_stats_dashboard' %}" class="btn-outline btn btn-ghost">
-            Dashboard
+            Tableau de bord
         </a>
         {% endif %}
     </div>
     <div class="flex-none gap-2">
         {% if user.is_authenticated %}
-        <!-- Notifications - IMPROVED -->
         <div class="dropdown dropdown-end">
             <label tabindex="0" class="btn btn-ghost btn-circle relative">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -63,15 +77,14 @@ class="toast toast-top toast-end z-50">
                 </svg>
                 {% if request.unread_notifications_count > 0 %}
                 <span class="absolute top-0 right-0 bg-base-content text-xs text-base-300 rounded-full h-5 w-5 flex items-center justify-center">
-                {{ request.unread_notifications_count }}
-            </span>
+                    {{ request.unread_notifications_count }}
+                </span>
                 {% endif %}
             </label>
 
             <div tabindex="0"
                  class="dropdown-content z-[1] mt-3 card bg-neutral shadow-xl w-[500px] text-neutral-content">
                 <div class="p-0">
-                    <!-- Header -->
                     <div class="px-4 py-3 flex justify-between items-center">
                         <h3 class="text-sky-400 font-medium">
                             Notifications
@@ -81,11 +94,9 @@ class="toast toast-top toast-end z-50">
                         </h3>
                     </div>
 
-                    <!-- Notification list -->
                     <div class="max-h-80 overflow-y-auto">
                         {% for notification in request.user.notifications.all|slice:":5" %}
                         <div class="grid grid-cols-12 gap-2 px-4 py-2 border-b border-neutral-700 hover:bg-neutral-800">
-                            <!-- Status column -->
                             <div class="col-span-2">
                                 {% if notification.status == 'resolved' %}
                                 <span class="bg-green-500 text-white text-xs px-3 py-1 rounded-full">Résolu</span>
@@ -95,15 +106,10 @@ class="toast toast-top toast-end z-50">
                                 <span class="bg-gray-500 text-white text-xs px-3 py-1 rounded-full">{{ notification.status }}</span>
                                 {% endif %}
                             </div>
-
-                            <!-- Date column -->
                             <div class="col-span-3 text-sm text-gray-300">
                                 {{ notification.created_at|date:"d/m/Y" }}
                             </div>
-
-                            <!-- Message and action column -->
                             <div class="col-span-7 flex flex-col gap-1">
-                                <!-- Message -->
                                 <p class="text-sm text-neutral-content">
                                     {{ notification.message | truncatechars:40 }}
                                     <span class="text-xs text-yellow-400 ml-2">{{ notification.created_at|date:"H:i" }}</span>
@@ -117,11 +123,9 @@ class="toast toast-top toast-end z-50">
                         {% endfor %}
                     </div>
 
-                    <!-- Footer -->
                     <div class="p-3 border-t border-neutral-700">
                         <a href="{% url 'notification_list' %}"
-                           class="btn btn-primary btn-sm w-full bg-indigo-600 hover:bg-indigo-700 border-none">Voir
-                            tout</a>
+                           class="btn btn-primary btn-sm w-full bg-indigo-600 hover:bg-indigo-700 border-none">Voir tout</a>
                     </div>
                 </div>
             </div>
@@ -133,8 +137,7 @@ class="toast toast-top toast-end z-50">
                     {% if user.profile_picture %}
                     <img src="{{ user.profile_picture.url }}" alt="avatar"/>
                     {% else %}
-                    <!-- Show default avatar -->
-                    <img src="/media/profiles/default_avatar.jpg" alt="default avatar"/>
+                    <img src="/media/profiles/default_avatar.jpg" alt="avatar par défaut"/>
                     {% endif %}
                 </div>
             </div>
@@ -150,6 +153,48 @@ class="toast toast-top toast-end z-50">
     </div>
 </nav>
 
-{% block content %}{% endblock %}
+<main class="flex-grow">
+    {% block content %}{% endblock %}
+</main>
+<footer class="w-full bg-gray-800 text-gray-300 z-10 mt-auto">
+    <div class="container mx-auto px-4">
+        <div class="mb-3">
+            <h3 class="text-white text-lg font-bold mb-1 text-center mx-auto">TicketManager</h3>
+        </div>
+
+        <div class="flex flex-wrap gap-4 text-xs mb-3 justify-center">
+            <div class="flex flex-wrap gap-4">
+                <span class="text-white font-medium">Produit</span>
+                <a href="#features" class="hover:text-white transition-colors">Fonctionnalités</a>
+                <a href="#pricing" class="hover:text-white transition-colors">Tarifs</a>
+                <a href="#" class="hover:text-white transition-colors">Intégrations</a>
+                <a href="#" class="hover:text-white transition-colors">Mises à jour</a>
+            </div>
+
+            <div class="flex flex-wrap gap-4">
+                <span class="text-white font-medium">Entreprise</span>
+                <a href="#" class="hover:text-white transition-colors">À propos</a>
+                <a href="#" class="hover:text-white transition-colors">Contact</a>
+                <a href="#" class="hover:text-white transition-colors">Carrières</a>
+                <a href="#" class="hover:text-white transition-colors">Kit média</a>
+            </div>
+
+            <div class="flex flex-wrap gap-4">
+                <span class="text-white font-medium">Légal</span>
+                <a href="#" class="hover:text-white transition-colors">Conditions d’utilisation</a>
+                <a href="#" class="hover:text-white transition-colors">Politique de confidentialité</a>
+                <a href="#" class="hover:text-white transition-colors">Politique des cookies</a>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-700 pt-2">
+            <p class="text-gray-400 text-xs text-center">
+                © 2025 TicketManager. Tous droits réservés.
+            </p>
+        </div>
+    </div>
+</footer>
+
 </body>
+
 </html>

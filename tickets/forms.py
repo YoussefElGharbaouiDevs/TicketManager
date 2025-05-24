@@ -1,5 +1,5 @@
 ﻿from django import forms
-from .models import Ticket, Status
+from .models import Ticket, Status, Comment
 
 
 class TicketForm(forms.ModelForm):
@@ -26,3 +26,15 @@ class TicketStatusForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['status'].queryset = Status.objects.exclude(pk=4)
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'class': 'textarea textarea-bordered w-full',
+                'rows': 3,
+                'placeholder': 'Ajouter un commentaire...'
+            })
+        }

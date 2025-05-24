@@ -20,15 +20,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import RedirectView
 
+from TicketManagement import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('tickets/', include('tickets.urls')),
     path('stastistics/', include('dashboard.urls')),
     path('notifications/', include('notifications.urls')),
-    path('', RedirectView.as_view(url='/accounts/login/', permanent=False)),
-
+    path('', views.home_view, name='home'),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
