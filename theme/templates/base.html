@@ -57,7 +57,7 @@
         {% elif user.is_authenticated and user.role == 'agent' %}
         <a href="{% url 'agent_dashboard' %}" class="btn btn-ghost text-xl">TicketManager</a>
         {% else %}
-        <a href="{% url 'login' %}" class="btn btn-ghost text-xl">TicketManager</a>
+        <a href="{% url 'home' %}" class="btn btn-ghost text-xl">TicketManager</a>
         {% endif %}
 
         {% if user.is_authenticated and user.role == 'agent' %}
@@ -158,10 +158,6 @@
 </main>
 <footer class="w-full bg-gray-800 text-gray-300 z-10 mt-auto">
     <div class="container mx-auto px-4">
-        <div class="mb-3">
-            <h3 class="text-white text-lg font-bold mb-1 text-center mx-auto">TicketManager</h3>
-        </div>
-
         <div class="flex flex-wrap gap-4 text-xs mb-3 justify-center">
             <div class="flex flex-wrap gap-4">
                 <span class="text-white font-medium">Produit</span>
