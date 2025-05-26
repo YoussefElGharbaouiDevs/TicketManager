@@ -1,9 +1,12 @@
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.template.response import TemplateResponse
 
 from core.messages import AppMessages
+from tickets.models import Ticket
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 
@@ -57,5 +60,6 @@ def profile_view(request):
     else:
         form = CustomUserChangeForm(instance=request.user)
     return render(request, 'profile.html', {'form': form})
+
 
 

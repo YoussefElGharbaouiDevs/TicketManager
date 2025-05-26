@@ -1,0 +1,332 @@
+﻿{% extends "admin/base_site.html" %}
+
+{% block extrahead %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .dashboard-container {
+            padding: 2rem;
+            background-color: #f8fafc;
+            min-height: 100vh;
+        }
+
+        .dashboard-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            border: 1px solid #e2e8f0;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            align-items: center;
+            justify-items: center;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .donut-container {
+            position: relative;
+            height: 350px;
+            width: 350px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-nouveau { color: #ef4444; }
+        .stat-encours { color: #3b82f6; }
+        .stat-resolu { color: #10b981; }
+        .stat-ferme { color: #8b5cf6; }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 1rem;
+            }
+
+            .dashboard-title {
+                font-size: 1.5rem;
+            }
+
+            .chart-card {
+                padding: 1rem;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+
+            .donut-container {
+                height: 250px;
+                width: 250px;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h1 class="dashboard-title">Tableau de bord des tickets</h1>
+
+    <!-- Statistics Cards -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number stat-nouveau">{{ data.0|default:0 }}</div>
+            <div class="stat-label">Nouveau</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number stat-encours">{{ data.1|default:0 }}</div>
+            <div class="stat-label">En cours</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number stat-resolu">{{ data.2|default:0 }}</div>
+            <div class="stat-label">Résolu</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number stat-ferme">{{ data.3|default:0 }}</div>
+            <div class="stat-label">Fermé</div>
+        </div>
+    </div>
+
+    <!-- Chart Card -->
+    <div class="chart-card">
+        <div class="charts-grid">
+            <div class="chart-container">
+                <canvas id="ticketChart"></canvas>
+            </div>
+            <div class="donut-container">
+                <canvas id="donutChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const colors = {
+        nouveau: 'rgba(239, 68, 68, 0.8)',
+        encours: 'rgba(59, 130, 246, 0.8)',
+        resolu: 'rgba(16, 185, 129, 0.8)',
+        ferme: 'rgba(139, 92, 246, 0.8)'
+    };
+
+    const borderColors = {
+        nouveau: 'rgba(239, 68, 68, 1)',
+        encours: 'rgba(59, 130, 246, 1)',
+        resolu: 'rgba(16, 185, 129, 1)',
+        ferme: 'rgba(139, 92, 246, 1)'
+    };
+
+    // Bar Chart
+    const ctx = document.getElementById('ticketChart').getContext('2d');
+    const ticketChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ labels|safe }},
+            datasets: [{
+                label: 'Nombre de tickets',
+                data: {{ data|safe }},
+                backgroundColor: [
+                    colors.nouveau,
+                    colors.encours,
+                    colors.resolu,
+                    colors.ferme
+                ],
+                borderColor: [
+                    borderColors.nouveau,
+                    borderColors.encours,
+                    borderColors.resolu,
+                    borderColors.ferme
+                ],
+                borderWidth: 2,
+                borderRadius: 6,
+                borderSkipped: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: 'white',
+                    bodyColor: 'white',
+                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                    borderWidth: 1,
+                    cornerRadius: 8,
+                    displayColors: false
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 12,
+                            weight: '500'
+                        },
+                        color: '#64748b'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(148, 163, 184, 0.1)',
+                        drawBorder: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 12
+                        },
+                        color: '#64748b',
+                        stepSize: 1
+                    }
+                }
+            },
+            animation: {
+                duration: 1000,
+                easing: 'easeOutQuart'
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            }
+        }
+    });
+
+    // Donut Chart
+    const donutCtx = document.getElementById('donutChart').getContext('2d');
+    const donutChart = new Chart(donutCtx, {
+        type: 'doughnut',
+        data: {
+            labels: {{ labels|safe }},
+            datasets: [{
+                data: {{ data|safe }},
+                backgroundColor: [
+                    colors.nouveau,
+                    colors.encours,
+                    colors.resolu,
+                    colors.ferme
+                ],
+                borderColor: [
+                    borderColors.nouveau,
+                    borderColors.encours,
+                    borderColors.resolu,
+                    borderColors.ferme
+                ],
+                borderWidth: 3,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '60%',
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        padding: 20,
+                        font: {
+                            size: 12,
+                            weight: '500'
+                        },
+                        color: '#64748b',
+                        usePointStyle: true,
+                        pointStyle: 'circle'
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: 'white',
+                    bodyColor: 'white',
+                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                    borderWidth: 1,
+                    cornerRadius: 8,
+                    displayColors: true,
+                    callbacks: {
+                        label: function(context) {
+                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            const percentage = ((context.parsed / total) * 100).toFixed(1);
+                            return context.label + ': ' + context.parsed + ' (' + percentage + '%)';
+                        }
+                    }
+                }
+            },
+            animation: {
+                duration: 1200,
+                easing: 'easeOutQuart'
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

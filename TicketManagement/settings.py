@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'tickets',
     'dashboard',
     'notifications',
+
 ]
 TAILWIND_APP_NAME = 'theme'
 
@@ -66,6 +68,11 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'alert-success',
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
+}
+JAZZMIN_SETTINGS = {
+    "topmenu_links": [
+        {"name": "Statistics", "url": "/admin/dashboard", "permissions": ["auth.view_user"]},
+    ],
 }
 
 MIDDLEWARE = [
